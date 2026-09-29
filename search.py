@@ -218,7 +218,7 @@ def build_game_tree(search_problem, max_depth):
     expand(search_problem.getStartState(), 0) 
 
     if stats["internal_nodes"] > 0:
-        stats["media"] = stats["branching_sum"] / stats['internal_nodes']
+        stats["media"] = stats["branching_sum"] / stats["internal_nodes"]
 
     return None, stats
 
@@ -239,31 +239,52 @@ def depthFirstSearch(search_problem):
     """
     num_visited = 0
     structure = util.Stack()
-    structure.push("""YOUR CODE HERE""") # DEFINE THE INITIAL STATE
+    structure.push((search_problem.getStartState(), [])) # DEFINE THE INITIAL STATE 
     visited = []
-
+ 
     while not structure.isEmpty():
         path = structure.pop()
-        current_state = """YOUR CODE HERE""" # INDEX THE CURRENT STATE
+        current_state = path[0] # INDEX THE CURRENT STATE  
 
         if search_problem.isGoalState(current_state):
-            return """YOUR CODE HERE""" # RETURN THE PATH OF STATES
+            return num_visited, path[1] # RETURN THE PATH OF STATES
 
         if current_state not in visited:
             visited.append(current_state)
+            num_visited += 1
 
             for successor in search_problem.getSuccessors(current_state):
                 if successor[0] not in visited:
-                    new_path = """YOUR CODE HERE""" # CREATE THE NEW PATH OF STATES
-                    structure.push(new_path)
+                    new_path = (successor[0], path[1] + [successor[1]]) # CREATE THE NEW PATH OF STATES
+                    structure.push(new_path) 
 
-    return num_visited, None
+    return num_visited, None 
 
 
 def breadthFirstSearch(search_problem):
     """Search the shallowest nodes in the search tree first."""
-    "*** YOUR CODE HERE ***"
-    raise NotImplementedError
+    num_visited = 0
+    structure = util.Queue()
+    structure.push((search_problem.getStartState(), [])) # DEFINE THE INITIAL STATE 
+    visited = []
+     
+    while not structure.isEmpty():
+        path = structure.pop()
+        current_state = path[0] # INDEX THE CURRENT STATE  
+    
+        if search_problem.isGoalState(current_state):
+            return num_visited, path[1] # RETURN THE PATH OF STATES
+    
+        if current_state not in visited:
+            visited.append(current_state)
+            num_visited += 1
+    
+            for successor in search_problem.getSuccessors(current_state):
+                if successor[0] not in visited:
+                    new_path = (successor[0], path[1] + [successor[1]]) # CREATE THE NEW PATH OF STATES
+                    structure.push(new_path) 
+    
+    return num_visited, None
 
 
 
